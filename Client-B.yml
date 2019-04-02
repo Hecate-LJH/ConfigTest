@@ -1,1 +1,3 @@
-this is Client-B Server
+who:
+  am:
+    i: this is Client-B Server
