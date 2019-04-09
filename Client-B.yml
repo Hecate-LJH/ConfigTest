@@ -6,7 +6,7 @@ eureka:
 who:
   am:
     i: this is Client-B Server
-    a: change
+    a: modify
 
 my:
   hello: 으
