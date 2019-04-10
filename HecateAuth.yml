@@ -1,0 +1,51 @@
+# Spring Setting
+spring:
+  profiles:
+    active: local
+  application:
+    name: HecateAuth
+  main:
+    allow-bean-definition-overriding: true
+  h2:
+    console:
+      enabled: true
+#  devtools:
+#    livereload:
+#      enabled: true
+  # DataBase Setting
+  datasource:
+    initialization-mode: never
+    url: jdbc:oracle:thin:@222.122.205.201:1521:UDB
+    username: hecate
+    password: hecate!1
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+
+  # Thymeleaf Setting
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    mode: HTML
+
+# MyBatis Setting
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.uracle.hecate.auth.model
+  configuration:
+    default-scripting-language: com.uracle.hecate.auth.core.common.driver.EnhanceMybatisLanguageDriver
+
+# url Setting
+management:
+  endpoint:
+    web:
+      base-path: /
+
+# Loggin Setting
+logging:
+  level:
+    root: info
+    com.uracle.hecate.auth: debug
