@@ -49,3 +49,9 @@ logging:
   level:
     root: info
     com.uracle.hecate.auth: debug
+    
+# Eureka
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: http://localhost:8997/eureka/
