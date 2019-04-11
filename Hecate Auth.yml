@@ -3,7 +3,7 @@ spring:
   profiles:
     active: local
   application:
-    name: HecateAuth
+    name: Hecate Auth
   main:
     allow-bean-definition-overriding: true
   h2:
