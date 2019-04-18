@@ -54,4 +54,4 @@ logging:
 eureka:
  client:
   serviceUrl:
-   defaultZone: http://localhost:9102/eureka/
+   defaultZone: http://222.122.205.220:9102/eureka/
