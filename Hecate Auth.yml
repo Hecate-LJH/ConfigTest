@@ -61,7 +61,7 @@ eureka:
   client:
     service-url:
       #Eureka 서버 주소
-      defaultZone: http:/222.122.205.220:9102/eureka   
+      defaultZone: http://222.122.205.220:9102/eureka   
 
 # Hystrix 설정
 hystrix:
