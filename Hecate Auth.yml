@@ -1,9 +1,19 @@
+# Server Setting
+server:
+  port: 9000
+
+
 # Spring Setting
 spring:
   profiles:
     active: local
   application:
     name: Hecate Auth
+  cloud:
+    # config Server 설정.
+    config:
+      uri: http://222.122.205.220:9103
+      profile: custom, hazelcast, legacy, message_ko, message, score
   main:
     allow-bean-definition-overriding: true
   h2:
@@ -31,6 +41,12 @@ spring:
       content-type: text/html
     mode: HTML
 
+  rabbitmq:
+    host: 222.122.205.220
+    port: 5672
+    username: sysadm
+    password: sysadm 
+
 # MyBatis Setting
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
@@ -38,20 +54,48 @@ mybatis:
   configuration:
     default-scripting-language: com.uracle.hecate.auth.core.common.driver.EnhanceMybatisLanguageDriver
 
+eureka:
+  instance:
+    #true : 서비스간 통신 시 hostname 보다 ip를 우선 사용, false : 우선 사용 안함.
+    prefer-ip-address: true 
+  client:
+    service-url:
+      #Eureka 서버 주소
+      defaultZone: http:/222.122.205.220:9102/eureka   
+
+# Hystrix 설정
+hystrix:
+  threadpool:
+    default:
+      coreSize: 100  # Hystrix Thread Pool default size
+      maximumSize: 500  # Hystrix Thread Pool default size
+      keepAliveTimeMinutes: 1
+      allowMaximumSizeToDivergeFromCoreSize: true
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000     #설정 시간동안 처리 지연발생시 timeout and 설정한 fallback 로직 수행
+      circuitBreaker:
+        requestVolumeThreshold: 2                # 설정수 값만큼 요청이 들어온 경우만 circut open 여부 결정 함
+        errorThresholdPercentage: 50        # requestVolumn값을 넘는 요청 중 설정 값이상 비율이 에러인 경우 circuit open
+        enabled: true
+
+
 # url Setting
 management:
-  endpoint:
+  endpoints:
     web:
-      base-path: /
+      exposure:
+        include: "refresh"
+#        include: '*'                              #모든 endpoint 허용
+    
 
 # Loggin Setting
 logging:
   level:
     root: info
-    com.uracle.hecate.auth: debug
+    com.uracle.hecate.auth: info
+
     
-# Eureka
-eureka:
- client:
-  serviceUrl:
-   defaultZone: http://222.122.205.220:9102/eureka/
