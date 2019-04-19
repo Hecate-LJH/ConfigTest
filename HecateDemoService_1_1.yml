@@ -1,0 +1,17 @@
+eureka:
+  instance:
+    prefer-ip-address: true                       #true : 서비스간 통신 시 hostname 보다 ip를 우선 사용, false : 우선 사용 안함.
+  client:
+    service-url:
+      defaultZone: http://localhost:9102/eureka   #Eureka 서버 주소
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'                              #모든 endpoint 허용
+        
+        
+        
+test:
+  message: 가나다라마바사아
