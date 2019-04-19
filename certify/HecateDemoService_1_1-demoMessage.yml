@@ -1,3 +1,0 @@
-test:
-  localdemo:
-    message: path => /ConfigTest/localDemo2/demoMessage
