@@ -1,6 +1,6 @@
 # Server Setting
 server:
-  port: 9000
+  port: 9001
 
 
 # Spring Setting
