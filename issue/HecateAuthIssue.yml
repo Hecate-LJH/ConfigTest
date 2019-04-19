@@ -19,7 +19,9 @@ spring:
   h2:
     console:
       enabled: true
-#  devtools:
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
 #    livereload:
 #      enabled: true
   # DataBase Setting
