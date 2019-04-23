@@ -27,7 +27,7 @@ zuul:
 #  ignored-services: "*"                         # zuul의 라우팅 목록에 등록된 서비스를 제외하고 모두 무시 한다.
 #  prefix: /api                                  # Zuul에 의해 routing되는 모든 service 의 Endpoint를 /api/~ 로 묶는다.
   routes:
-    HecateDemoService_1_1:                        # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
+    Hecate_Demo_Service_1_1:                        # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
       path: /demo1/**                           # 로드 벨런싱 할 Api의 Root 주소
       serviceId: HecateDemoService_1_1            # Eureka-Client의 ServiceId를 입력해야한다.
       stripPrefix: false
