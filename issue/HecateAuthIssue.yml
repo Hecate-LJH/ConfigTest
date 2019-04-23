@@ -13,7 +13,7 @@ spring:
     # config Server 설정.
     config:
       uri: http://222.122.205.220:9103
-      profile: custom, hazelcast, legacy, message_ko, message, score
+      profile: custom, hazelcast, legacy, message, score
   main:
     allow-bean-definition-overriding: true
   h2:
@@ -67,32 +67,24 @@ eureka:
 
 # Hystrix 설정
 hystrix:
-  threadpool:
-    default:
-      coreSize: 100  # Hystrix Thread Pool default size
-      maximumSize: 500  # Hystrix Thread Pool default size
-      keepAliveTimeMinutes: 1
-      allowMaximumSizeToDivergeFromCoreSize: true
   command:
-    default:
+    productInfo:    # command key. use 'default' for global setting.
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3000     #설정 시간동안 처리 지연발생시 timeout and 설정한 fallback 로직 수행
-      circuitBreaker:
-        requestVolumeThreshold: 2                # 설정수 값만큼 요청이 들어온 경우만 circut open 여부 결정 함
-        errorThresholdPercentage: 50        # requestVolumn값을 넘는 요청 중 설정 값이상 비율이 에러인 경우 circuit open
-        enabled: true
+            timeoutInMilliseconds: 1000
+    circuitBreaker:
+        requestVolumeThreshold: 3   # Minimum number of request to calculate circuit breaker's health. default 20
+        errorThresholdPercentage: 50 # Error percentage to open circuit. default 50
 
-
-# url Setting
 management:
   endpoints:
     web:
       exposure:
-        include: "refresh"
-#        include: '*'                              #모든 endpoint 허용
-    
+        include: "*"
+      base-path: /actuator
+      cors:
+        allowed-origins: true
 
 # Loggin Setting
 logging:
