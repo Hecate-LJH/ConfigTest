@@ -45,7 +45,7 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 1000         # Thread 타임아웃 시간 설정 (Ribbon의 각 timeout보다 커야 잘 동작한다.)
-    HecateDemoService_1_1:
+    Hecate_Demo_Service_1_1:
       execution:
         isolation:
           thread:
@@ -63,7 +63,7 @@ hystrix:
 #============ hystrix ============
 
 #====== 아래 서비스들의 Server List는 Ribbon을 이용해 찾는다.
-HecateDemoService_1_1:                            # 서비스별 Thread pool
+Hecate_Demo_Service_1_1:                            # 서비스별 Thread pool
   ribbon:
 #    eureka:
 #      enabled: true
