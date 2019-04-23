@@ -1,6 +1,6 @@
 # Server Setting
 server:
-  port: 9000
+  port: 9003
 
 
 # Spring Setting
@@ -8,12 +8,12 @@ spring:
   profiles:
     active: local
   application:
-    name: Hecate Auth
+    name: HecateAuthPc
   cloud:
     # config Server 설정.
     config:
       uri: http://222.122.205.220:9103
-      profile: custom, hazelcast, legacy, message_ko, message, score
+      profile: custom, hazelcast, legacy, message, score
   main:
     allow-bean-definition-overriding: true
   h2:
