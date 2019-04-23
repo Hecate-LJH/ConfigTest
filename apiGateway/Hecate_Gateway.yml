@@ -1,6 +1,6 @@
 spring:
   application:
-    name: HecateGateway
+    name: Hecate_Gateway
 
 server:
   port: 9101
