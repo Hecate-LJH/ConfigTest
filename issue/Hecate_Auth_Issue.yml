@@ -54,7 +54,7 @@ spring:
     sampler:
       probability: 1.0
   zipkin:
-    base-url: http://http://222.122.205.218:9580/
+    base-url: http://222.122.205.218:9580/
 
 # MyBatis Setting
 mybatis:
