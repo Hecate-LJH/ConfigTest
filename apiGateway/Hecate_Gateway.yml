@@ -35,6 +35,7 @@ zuul:
     Hecate_Auth_Issue:                         # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
       path: /api/hecate/auth/issue/**          # 로드 벨런싱 할 Api의 Root 주소
       serviceId: Hecate_Auth_Issue             # Eureka-Client의 ServiceId를 입력해야한다.
+      stripPrefix: false
       
     Hecate_Auth_Certify:                       # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
       path: /api/hecate/auth/certify/**        # 로드 벨런싱 할 Api의 Root 주소
