@@ -48,14 +48,8 @@ spring:
     port: 5672
     username: sysadm
     password: sysadm 
-
-  sleuth:
-    trace-id128: true
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://222.122.205.218:9580/
-
+    
+    
 # MyBatis Setting
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
