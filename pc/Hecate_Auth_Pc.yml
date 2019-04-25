@@ -8,7 +8,7 @@ spring:
   profiles:
     active: local
   application:
-    name: HecateAuthPc
+    name: Hecate_Auth_Pc
   cloud:
     # config Server 설정.
     config:
