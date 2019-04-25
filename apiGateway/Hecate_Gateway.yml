@@ -31,6 +31,11 @@ zuul:
       path: /demo1/**                           # 로드 벨런싱 할 Api의 Root 주소
       serviceId: Hecate_Demo_Service_1_1            # Eureka-Client의 ServiceId를 입력해야한다.
       stripPrefix: false
+      
+    Hecate_Auth_Issue:                         # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
+      path: /api/hecate/auth/issue/**          # 로드 벨런싱 할 Api의 Root 주소
+      serviceId: Hecate_Auth_Issue             # Eureka-Client의 ServiceId를 입력해야한다.
+      stripPrefix: false
   ribbon-isolation-strategy: thread             # API GateWay에 등록된 각 서비스들의 격리 전략 Hystrix Command를 사용할때는 Thread 권장(공식 사이트에서 추천), 호출량이 너무 많아서 분리된 스레드의 사용이 주는 오버헤드가 큰 경우 Semaphore 권장
   thread-pool:
     use-separate-thread-pools: true             # Thread pool을 서비스 별로 나눌지 여부
