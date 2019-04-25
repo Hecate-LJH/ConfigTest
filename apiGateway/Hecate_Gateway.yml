@@ -74,8 +74,8 @@ Hecate_Auth_Issue:                            # 서비스별 Thread pool
 #      enabled: true
 #    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList # <- 해당 클래스를 이용해 Euyreka 정보를 사용할 수 있다.
     MaxAutoRetriesNextServer: 1                 # 첫번째 서버를 제외 한 재시도가능한 서버 갯수
-    ReadTimeout: 3000                           # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
-    ConnectTimeout: 1000                        # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
+    ReadTimeout: 30000                           # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
+    ConnectTimeout: 10000                        # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
     MaxTotalConnections: 300                    # 총 커넥션 수
     MaxConnectionsPerHost: 100                  # 한 호스트당 최대 연결 커넥션 수
 
