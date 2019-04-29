@@ -19,7 +19,9 @@ spring:
   h2:
     console:
       enabled: true
-#  devtools:
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
 #    livereload:
 #      enabled: true
   # DataBase Setting
@@ -88,8 +90,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: "refresh"
-#        include: '*'                              #모든 endpoint 허용
+        include: "*"
+      base-path: /actuator
+      cors:
+        allowed-origins: true
     
 
 # Loggin Setting
