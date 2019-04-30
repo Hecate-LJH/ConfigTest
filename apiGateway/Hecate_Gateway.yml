@@ -60,7 +60,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 1000         # Thread 타임아웃 시간 설정 (Ribbon의 각 timeout보다 커야 잘 동작한다.)
+            timeoutInMilliseconds: 301000         # Thread 타임아웃 시간 설정 (Ribbon의 각 timeout보다 커야 잘 동작한다.)
     Hecate_Demo_Service_1_1:
       execution:
         isolation:
