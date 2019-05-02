@@ -66,11 +66,11 @@ eureka:
 # Hystrix 설정
 hystrix:
   command:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 30000
-  
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000  
     circuitBreaker:
         requestVolumeThreshold: 3   # Minimum number of request to calculate circuit breaker's health. default 20
         errorThresholdPercentage: 50 # Error percentage to open circuit. default 50
