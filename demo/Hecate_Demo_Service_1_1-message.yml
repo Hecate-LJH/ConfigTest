@@ -1,0 +1,6 @@
+message:
+  test: in message.yml
+  
+  
+test:
+  message: testMessage

@@ -1,6 +1,6 @@
 # Server Setting
 server:
-  port: 9000
+  port: 9003
 
 
 # Spring Setting
@@ -8,18 +8,20 @@ spring:
   profiles:
     active: local
   application:
-    name: Hecate Auth
+    name: Hecate_Auth_Pc
   cloud:
     # config Server 설정.
     config:
       uri: http://222.122.205.220:9103
-      profile: custom, hazelcast, legacy, message_ko, message, score
+      profile: custom, hazelcast, legacy, message, score
   main:
     allow-bean-definition-overriding: true
   h2:
     console:
       enabled: true
-#  devtools:
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
 #    livereload:
 #      enabled: true
   # DataBase Setting
@@ -66,14 +68,15 @@ eureka:
 # Hystrix 설정
 hystrix:
   command:
-    default:
+    productInfo:    # command key. use 'default' for global setting.
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 30000  
+            timeoutInMilliseconds: 1000
     circuitBreaker:
         requestVolumeThreshold: 3   # Minimum number of request to calculate circuit breaker's health. default 20
         errorThresholdPercentage: 50 # Error percentage to open circuit. default 50
+
 
 # url Setting
 management:
@@ -84,7 +87,6 @@ management:
       base-path: /actuator
       cors:
         allowed-origins: true
-
     
 
 # Loggin Setting

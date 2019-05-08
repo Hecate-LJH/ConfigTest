@@ -1,0 +1,136 @@
+spring:
+  application:
+    name: Hecate_Gateway
+
+server:
+  port: 9101
+  
+eureka:
+  instance:
+    prefer-ip-address: true                       #true : 서비스간 통신 시 hostname 보다 ip를 우선 사용, false : 우선 사용 안함.
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9102/eureka/  #eureka 서버 연결 주소
+#============ endpoint ============  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'                            # 모든 엔드포인트 허용
+      base-path: /actuator                      # 기본 엔드포인트를 /actuator 로 설정
+      cors:
+        allowed-origins: true                   # 브라우져 에서 URL을 직접 열 수 있도록(요청) 허용
+#============ endpoint ============      
+
+#============ zuul ============  
+zuul:
+#  ignored-services: "*"                         # zuul의 라우팅 목록에 등록된 서비스를 제외하고 모두 무시 한다.
+#  prefix: /api                                  # Zuul에 의해 routing되는 모든 service 의 Endpoint를 /api/~ 로 묶는다.
+  routes:
+    Hecate_Demo_Service_1_1:                        # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
+      path: /demo1/**                           # 로드 벨런싱 할 Api의 Root 주소
+      serviceId: Hecate_Demo_Service_1_1            # Eureka-Client의 ServiceId를 입력해야한다.
+      stripPrefix: false
+      
+    Hecate_Auth_Issue:                         # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
+      path: /api/hecate/auth/issue/**          # 로드 벨런싱 할 Api의 Root 주소
+      serviceId: Hecate_Auth_Issue             # Eureka-Client의 ServiceId를 입력해야한다.
+      stripPrefix: false
+      
+    Hecate_Auth_Certify:                       # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
+      path: /api/hecate/auth/certify/**        # 로드 벨런싱 할 Api의 Root 주소
+      serviceId: Hecate_Auth_Certify           # Eureka-Client의 ServiceId를 입력해야한다.
+      stripPrefix: false
+      
+    Hecate_Auth_Pc:                            # zuul에서 관리할 application name, 각 M/S 서비스의 이름을 넣으면 된다.
+      path: /api/hecate/auth/pc/**             # 로드 벨런싱 할 Api의 Root 주소
+      serviceId: Hecate_Auth_Pc                # Eureka-Client의 ServiceId를 입력해야한다.  
+      stripPrefix: false
+    
+  ribbon-isolation-strategy: thread             # API GateWay에 등록된 각 서비스들의 격리 전략 Hystrix Command를 사용할때는 Thread 권장(공식 사이트에서 추천), 호출량이 너무 많아서 분리된 스레드의 사용이 주는 오버헤드가 큰 경우 Semaphore 권장
+  thread-pool:
+    use-separate-thread-pools: true             # Thread pool을 서비스 별로 나눌지 여부
+    thread-pool-key-prefix: zuul-               # Thread pool 접두사
+    
+#============ 위 zuuㅣ.routes에 있는 service들에 대한 정의 ============
+#============ hystrix ============
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 301000         # Thread 타임아웃 시간 설정 (Ribbon의 각 timeout보다 커야 잘 동작한다.)
+    Hecate_Demo_Service_1_1:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000        # 서비스의 스래드 타임ㅇ
+  threadpool:
+    zuul-product:
+      coreSize: 30
+      maximumSize: 100
+      allowMaximumSizeToDivergeFromCoreSize: true
+    zuul-display:
+      coreSize: 30
+      maximumSize: 100
+      allowMaximumSizeToDivergeFromCoreSize: true
+
+#============ hystrix ============
+
+#====== 아래 서비스들의 Server List는 Ribbon을 이용해 찾는다.
+Hecate_Auth_Issue:                            # 서비스별 Thread pool
+  ribbon:
+#    eureka:
+#      enabled: true
+#    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList # <- 해당 클래스를 이용해 Euyreka 정보를 사용할 수 있다.
+    MaxAutoRetriesNextServer: 1                 # 첫번째 서버를 제외 한 재시도가능한 서버 갯수
+    ReadTimeout: 300000                         # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
+    ConnectTimeout: 10000                       # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
+    MaxTotalConnections: 300                    # 총 커넥션 수
+    MaxConnectionsPerHost: 100                  # 한 호스트당 최대 연결 커넥션 수
+
+Hecate_Auth_Certify:                            # 서비스별 Thread pool
+  ribbon:
+#    eureka:
+#      enabled: true
+#    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList # <- 해당 클래스를 이용해 Euyreka 정보를 사용할 수 있다.
+    MaxAutoRetriesNextServer: 1                 # 첫번째 서버를 제외 한 재시도가능한 서버 갯수
+    ReadTimeout: 300000                           # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
+    ConnectTimeout: 10000                        # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
+    MaxTotalConnections: 300                    # 총 커넥션 수
+    MaxConnectionsPerHost: 100                  # 한 호스트당 최대 연결 커넥션 수
+
+Hecate_Auth_Pc:                            # 서비스별 Thread pool
+  ribbon:
+#    eureka:
+#      enabled: true
+#    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList # <- 해당 클래스를 이용해 Euyreka 정보를 사용할 수 있다.
+    MaxAutoRetriesNextServer: 1                 # 첫번째 서버를 제외 한 재시도가능한 서버 갯수
+    ReadTimeout: 30000                           # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
+    ConnectTimeout: 10000                        # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
+    MaxTotalConnections: 300                    # 총 커넥션 수
+    MaxConnectionsPerHost: 100                  # 한 호스트당 최대 연결 커넥션 수
+
+
+Hecate_Demo_Service_1_1:                            # 서비스별 Thread pool
+  ribbon:
+#    eureka:
+#      enabled: true
+#    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList # <- 해당 클래스를 이용해 Euyreka 정보를 사용할 수 있다.
+    MaxAutoRetriesNextServer: 1                 # 첫번째 서버를 제외 한 재시도가능한 서버 갯수
+    ReadTimeout: 3000                           # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
+    ConnectTimeout: 1000                        # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
+    MaxTotalConnections: 300                    # 총 커넥션 수
+    MaxConnectionsPerHost: 100                  # 한 호스트당 최대 연결 커넥션 수
+
+display:
+  ribbon:
+    MaxAutoRetriesNextServer: 1                 # 첫번째 서버를 제외 한 재시도가능한 서버 갯수
+    ReadTimeout: 3000                           # Apache HttpClient에서 사용하는 ReadTimeout 값(ms)
+    ConnectTimeout: 1000                        # Apache HttpClient에서 사용하는 연결 제한 시간(ms)
+    MaxTotalConnections: 300                    # 총 커넥션 수
+    MaxConnectionsPerHost: 100                  # 한 호스트당 최대 연결 커넥션 수
+#============ 위 zuuㅣ.routes에 있는 service들에 대한 정의 ============
+    
+#============ zuul ============  

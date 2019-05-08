@@ -3,7 +3,7 @@ eureka:
     prefer-ip-address: true                       #true : 서비스간 통신 시 hostname 보다 ip를 우선 사용, false : 우선 사용 안함.
   client:
     service-url:
-      defaultZone: http://222.122.205.220:9102/eureka   #Eureka 서버 주소
+      defaultZone: http://localhost:9102/eureka   #Eureka 서버 주소
 
 management:
   endpoints:
@@ -14,4 +14,4 @@ management:
         
         
 test:
-  message: 가나다라마바사아
+  message: 가나다라마바사아123123
